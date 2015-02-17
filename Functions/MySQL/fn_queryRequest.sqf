@@ -101,6 +101,8 @@ switch (_side) do {
 		_queryResult set[9,_new];
 	
 		_queryResult set[7,([_queryResult select 7,1] call DB_fnc_bool)];
+		
+		
 		_houseData = _uid spawn TON_fnc_fetchPlayerHouses;
 		waitUntil {scriptDone _houseData};
 		
@@ -124,6 +126,6 @@ switch (_side) do {
 };
 
 _keyArr = missionNamespace getVariable [format["%1_KEYS_%2",_uid,_side],[]];
-_queryResult set[12,_keyArr];
+_queryResult set[14,_keyArr];
 
 [_queryResult,"SOCK_fnc_requestReceived",_ownerID,false] call life_fnc_MP;
