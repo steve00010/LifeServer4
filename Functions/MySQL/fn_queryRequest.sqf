@@ -1,3 +1,4 @@
+#include "\life_server\script_macros.hpp"
 /*
 	File: fn_queryRequest.sqf
 	Author: Bryan "Tonic" Boardwine
