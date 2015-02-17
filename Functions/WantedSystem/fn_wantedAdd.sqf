@@ -52,26 +52,26 @@ if(count _type == 0) exitWith {}; //Not our information being passed...
 //Is there a custom bounty being sent? Set that as the pricing.
 if(_customBounty != -1) then {_type set[1,_customBounty];};
 //Search the wanted list to make sure they are not on it.
+_index = [_uid,life_wanted_list] call TON_fnc_index;
 
-_result = format["SELECT wantedID, wantedCrimes FROM wanted WHERE wantedID='%1'",_uid];
-waitUntil{!DB_Async_Active};
-_queryResult = [_result,2] call DB_fnc_asyncCall;
-
-_name = [_name] call DB_fnc_mresString;
-_val = [(_type select 1)] call DB_fnc_numberSafe;
-
-if(count _queryResult != 0) then
+if(_index != -1) then
 {
-	_pastCrimes = [(_queryResult select 1)] call DB_fnc_mresToArray;
-	_pastCrimes pushBack (_type select 0);
-	_pastCrimes = [_pastCrimes] call DB_fnc_mresArray;
-	_query = format["UPDATE wanted SET wantedCrimes = '%1', wantedBounty = wantedBounty + '%2', active = '1' WHERE wantedID='%3'",_pastCrimes,_val,_uid];
-} else {
-	_crimes = [[(_type select 0)]] call DB_fnc_mresArray;
-	_query = format["INSERT INTO wanted (wantedID, wantedName, wantedCrimes, wantedBounty, active) VALUES('%1','%2','%3','%4', '1')",_uid,_name,_crimes,_val];
+	_data = life_wanted_list select _index;
+	_crimes = _data select 2;
+	_crimes pushBack (_type select 0);
+	_val = _data select 3;
+	life_wanted_list set[_index,[_name,_uid,_crimes,(_type select 1) + _val]];
+	diag_log format["Inserting  new player into wanted DB"];
+	_query = format["Replace into wanted (pid,charges,bounty) values('%2','%1','%3');", _crimes, _uid,(_type select 1) + _val];
+	waitUntil {sleep (random 0.3); !DB_Async_Active};
+	_queryResult = [_query,1] call DB_fnc_asyncCall;
+}
+	else
+{
+	life_wanted_list pushBack [_name,_uid,[(_type select 0)],(_type select 1)];
+	diag_log format["Inserting player into wanted DB"];
+	_query = format["Replace into wanted (pid,charges,bounty) values('%2','%1','%3');", [(_type select 0)], _uid,(_type select 1)];
+	waitUntil {sleep (random 0.3); !DB_Async_Active};
+	_queryResult = [_query,1] call DB_fnc_asyncCall;
 };
-
-if(!isNil "_query") then {
-	waitUntil{!DB_Async_Active};
-	[_query,2] call DB_fnc_asyncCall;
-};
+diag_log format["WANTED_LIST = %1", life_wanted_list];

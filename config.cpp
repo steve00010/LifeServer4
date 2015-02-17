@@ -90,10 +90,13 @@ class CfgFunctions
 			class wantedFetch {};
 			class wantedPerson {};
 			class wantedBounty {};
+			class wantedTicket {};
+			class wantedPardon {};
 			class wantedRemove {};
+			class wantedRemoveLocally {};
 			class wantedAdd {};
-			class wantedCrimes {};
-			class wantedProfUpdate {};
+			class wantedPunish {};
+			class initWanted {};
 		};
 		
 		class Jail_Sys
