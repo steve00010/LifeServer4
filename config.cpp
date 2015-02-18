@@ -135,6 +135,7 @@ class CfgFunctions
 			class logIt {};
 			class federalUpdate {};
 			class chopShopSell {};
+			class chopShopClaim {};
 			class clientDisconnect {};
 			class cleanupRequest {};
 			class setObjVar {};
