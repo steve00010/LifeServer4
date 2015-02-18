@@ -141,6 +141,7 @@ class CfgFunctions
 			class keyManagement {};
 			class loadEconomy {};
 			class getPrices {};
+			class vehicleSpray {};
 		};
 		
 		class Housing
