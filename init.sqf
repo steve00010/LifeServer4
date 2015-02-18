@@ -145,7 +145,7 @@ life_radio_indep = radioChannelCreate [[0, 0.95, 1, 0.8], "Side Channel", "%UNIT
 /* Set the amount of gold in the federal reserve at mission start */
 fed_bank setVariable ["safe",count playableUnits,true];
 [] spawn TON_fnc_federalUpdate;
-
+life_economy = [];
 /* Event handler for disconnecting players */
 addMissionEventHandler ["HandleDisconnect",{_this call TON_fnc_clientDisconnect; false;}];
 [] call compile PreProcessFileLineNumbers "\life_server\functions.sqf";
@@ -172,7 +172,7 @@ life_wanted_list = [];
 };
 
 [] spawn TON_fnc_initHouses;
-
+[] spawn TON_fnc_loadEconomy;
 /* Setup the federal reserve building(s) */
 private["_dome","_rsb"];
 _dome = nearestObject [[16019.5,16952.9,0],"Land_Dome_Big_F"];
