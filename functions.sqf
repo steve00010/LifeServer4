@@ -1,4 +1,13 @@
 #include "script_macros.hpp"
+life_fnc_sidechat =
+compileFinal "
+	if(life_sidechat) then {life_sidechat = false;} else {life_sidechat = true;};
+	[[player,life_sidechat,playerSide],""TON_fnc_managesc"",false,false] spawn life_fnc_MP;
+	[] call life_fnc_settingsMenu;
+";
+
+publicVariable "life_fnc_sidechat";
+
 TON_fnc_index =
 compileFinal "
 	private[""_item"",""_stack""];
@@ -25,7 +34,21 @@ compileFinal "
 	[[life_atmbank,life_cash,owner player,player],""life_fnc_admininfo"",_ret,false] call life_fnc_MP;
 ";
 publicVariable "TON_fnc_player_query";
+
 publicVariable "TON_fnc_index";
+
+TON_fnc_clientWireTransfer =
+compileFinal "
+	private[""_unit"",""_val"",""_from""];
+	_val = _this select 0;
+	_from = _this select 1;
+	if(!([str(_val)] call TON_fnc_isnumber)) exitWith {};
+	if(_from == """") exitWith {};
+	pbh_life_atmcash = pbh_life_atmcash + _val;
+	hint format[""%1 has wire transferred $%2 to you."",_from,[_val] call life_fnc_numberText];
+	
+";
+publicVariable "TON_fnc_clientWireTransfer";
 
 TON_fnc_isnumber =
 compileFinal "
@@ -224,8 +247,8 @@ compileFinal "
 			private[""_message""];
 			_message = format["">>>MESSAGE FROM %1: %2"",_from,_msg];
 			hint parseText format [""<t color='#FFCC00'><t size='2'><t align='center'>New Message<br/><br/><t color='#33CC33'><t align='left'><t size='1'>To: <t color='#ffffff'>You<br/><t color='#33CC33'>From: <t color='#ffffff'>%1<br/><br/><t color='#33CC33'>Message:<br/><t color='#ffffff'>%2"",_from,_msg];
-			
-			[""TextMessage"",[format[""You Received A New Private Message From %1"",_from]]] call bis_fnc_showNotification;
+			PlaySound ""sms"";
+			[""TextMessage"",[format[""You have received a new text message from %1"",_from]]] call bis_fnc_showNotification;
 			systemChat _message;
 		};
 		
