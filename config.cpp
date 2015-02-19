@@ -93,6 +93,7 @@ class CfgFunctions
 			class wantedTicket {};
 			class wantedPardon {};
 			class wantedRemove {};
+			class wantedRemoveLocally {};
 			class wantedAdd {};
 			class wantedPunish {};
 			class initWanted {};
@@ -114,7 +115,17 @@ class CfgFunctions
 			class checkMoney {};
 		};
 	};
-	
+	class GHBSystem
+	{
+		tag = "GHB";
+		class Smartphone
+		{
+			file = "\life_server\Functions\Smartphone";
+			class handleMessages {};
+			class msgRequest {};
+			class removeMsg {};
+		};	
+	};
 	class TON_System
 	{
 		tag = "TON";
@@ -143,6 +154,9 @@ class CfgFunctions
 			class loadEconomy {};
 			class getPrices {};
 			class vehicleSpray {};
+			class CasinoRaid {};
+			class CasinoState {};
+			class goldUpdate {};
 		};
 		
 		class Housing
