@@ -164,15 +164,18 @@ life_wanted_list = [];
 		_logic = missionnamespace getvariable ["bis_functions_mainscope",objnull];
 		_queue = _logic getvariable "BIS_fnc_MP_queue";
 		_logic setVariable["BIS_fnc_MP_queue",[],TRUE];
-		
-		{
-			_x setVariable["sellers",[],true];
-		} foreach [Dealer_1,Dealer_2,Dealer_3];
 	};
 };
 
 [] spawn TON_fnc_initHouses;
 [] spawn TON_fnc_loadEconomy;
+
+[] execVM "\life_server\Functions\Custom\fn_spawnGold.sqf";
+call compile preProcessFileLineNumbers "\life_server\SHK_pos\shk_pos_init.sqf";
+gold_safe setVariable["gold",round(random 50),true];
+[] spawn TON_fnc_goldUpdate;
+
+
 /* Setup the federal reserve building(s) */
 private["_dome","_rsb"];
 _dome = nearestObject [[16019.5,16952.9,0],"Land_Dome_Big_F"];
