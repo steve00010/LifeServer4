@@ -104,7 +104,7 @@ if(!(EQUAL(life_server_extDB_notLoaded,""))) exitWith {}; //extDB did not fully 
 ["CALL deleteOldGangs",1] spawn DB_fnc_asyncCall;
 
 /* Map-based server side initialization. */
-master_group attachTo[bank_obj,[0,0,0]];
+
 onMapSingleClick "if(_alt) then {vehicle player setPos _pos};"; //Local debug for myself
 
 {
