@@ -184,6 +184,14 @@ class CfgFunctions
 		{
 			file = "\life_server\Functions\Actions";
 			class pickupAction {};
+		class GHBSystem
+		{
+		tag = "GHB";
+		class Smartphone
+		{
+			file = "\life_server\Functions\Smartphone";
+			class handleMessages {};
+			class msgRequest {};
 		};
 	};
 };
