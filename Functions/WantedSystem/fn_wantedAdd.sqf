@@ -18,7 +18,7 @@ switch(_type) do
 	case "187V": {_type = ["Vehicular Manslaughter",6500]};
 	case "187": {_type = ["Manslaughter",25000]};
 	case "901": {_type = ["Escaping Jail",10000]};
-	case "261": {_type = ["Rape",5000]}; //What type of sick bastard would add this?
+	case "261": {_type = ["Terrorist Act",35000]};
 	case "261A": {_type = ["Attempted Rape",3000]};
 	case "215": {_type = ["Attempted Auto Theft",5000]};
 	case "213": {_type = ["Use of illegal explosives",10000]};
@@ -32,7 +32,9 @@ switch(_type) do
 	case "482": {_type = ["Intent to distribute",7500]};
 	case "483": {_type = ["Drug Trafficking",9500]};
 	case "459": {_type = ["Burglary",6500]};
-	case "919": {_type = ["Organ Dealing",30000]};
+	case "919": {_type = ["Organ Dealing",20000]};
+	case "390": {_type = ["Public Intoxication",9000]};
+	case "902": {_type = ["Participating in a prison break",15000]};
 	default {_type = [];};
 };
 
@@ -49,7 +51,7 @@ if(_index != -1) then
 	_crimes pushBack (_type select 0);
 	_val = _data select 3;
 	life_wanted_list set[_index,[_name,_uid,_crimes,(_type select 1) + _val]];
-	diag_log format["Inserting player into wanted DB"];
+	diag_log format["Inserting  new player into wanted DB"];
 	_query = format["Replace into wanted (pid,charges,bounty) values('%2','%1','%3');", _crimes, _uid,(_type select 1) + _val];
 	waitUntil {sleep (random 0.3); !DB_Async_Active};
 	_queryResult = [_query,1] call DB_fnc_asyncCall;
@@ -57,7 +59,7 @@ if(_index != -1) then
 	else
 {
 	life_wanted_list pushBack [_name,_uid,[(_type select 0)],(_type select 1)];
-	diag_log format["Inserting new player into wanted DB"];
+	diag_log format["Inserting player into wanted DB"];
 	_query = format["Replace into wanted (pid,charges,bounty) values('%2','%1','%3');", [(_type select 0)], _uid,(_type select 1)];
 	waitUntil {sleep (random 0.3); !DB_Async_Active};
 	_queryResult = [_query,1] call DB_fnc_asyncCall;
