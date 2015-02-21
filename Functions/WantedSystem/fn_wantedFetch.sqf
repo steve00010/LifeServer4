@@ -1,26 +1,54 @@
+#include "\life_server\script_macros.hpp"
 /*
 	File: fn_wantedFetch.sqf
 	Author: Bryan "Tonic" Boardwine"
-	
+	Database Persistence By: ColinM
+	Assistance by: Paronity
+	Stress Tests by: Midgetgrimm
+
 	Description:
 	Displays wanted list information sent from the server.
 */
-private["_ret","_list","_jailedUnits"];
+private["_ret","_list","_result","_queryResult","_units","_inStatement"];
 _ret = [_this,0,ObjNull,[ObjNull]] call BIS_fnc_param;
 if(isNull _ret) exitWith {};
-
 _ret = owner _ret;
-_jailedUnits = [];
-{if(_x distance (getMarkerPos "jail_marker") < 60) then {_jailedUnits pushBack getPlayerUID _x}} count playableUnits;
-
+_inStatement = "";
 _list = [];
+_units = [];
+_tickTime = diag_tickTime;
+{if((side _x) == civilian) then {_units pushBack (getPlayerUID _x)};} foreach playableUnits;
+
 {
-	_uid = _x select 1;
-	if([_uid] call life_fnc_isUIDActive) then
+	if(_inStatement == "") then
 	{
-		if(!(_uid in _jailedUnits)) then {
-			_list pushBack _x;
-		};
+		_inStatement = _x;
+	}
+	else
+	{
+		_inStatement = _inStatement + "','" + _x;
 	};
-} foreach life_wanted_list;
+} forEach _units;
+
+_result = format["SELECT wantedID, wantedName FROM wanted WHERE active='1' AND wantedID in ('%1')",_inStatement];
+waitUntil{!DB_Async_Active};
+_queryResult = [_result,2,true] call DB_fnc_asyncCall;
+
+{
+	_list pushBack (_x);
+}
+forEach _queryResult;
+
+if(count _list == 0) exitWith {[[_list],"life_fnc_wantedList",_ret,false] spawn life_fnc_MP;};
+
+if((EQUAL(EXTDB_SETTINGS("MySQL_Query"),1))) then {
+	["diag_log",[
+		"------------- Wanted Query Request -------------",
+		format["QUERY: %1",_result],
+		format["Time to complete: %1 (in seconds)",(diag_tickTime - _tickTime)],
+		format["Result: %1",_queryResult],
+		"------------------------------------------------"
+	]] call TON_fnc_logIt;
+};
+
 [[_list],"life_fnc_wantedList",_ret,false] spawn life_fnc_MP;
