@@ -11,7 +11,7 @@ private["_display","_criminal","_tab","_queryResult","_result","_ret","_crimesDb
 disableSerialization;
 _ret = [_this,0,ObjNull,[ObjNull]] call BIS_fnc_param;
 _criminal = [_this,1,[],[]] call BIS_fnc_param;
-
+diag_log format ["CRIM: %1",_criminal];
 _result = format["SELECT wantedCrimes, wantedBounty FROM wanted WHERE active='1' AND wantedID='%1'",(_criminal select 0)];
 waitUntil{!DB_Async_Active};
 _tickTime = diag_tickTime;
