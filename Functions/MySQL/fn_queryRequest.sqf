@@ -113,7 +113,6 @@ switch (_side) do {
 		
 		_queryResult pushBack (missionNamespace getVariable[format["gang_%1",_uid],[]]);
 		
-		[_uid, _queryResult select 1] spawn life_fnc_initWanted;
 	};
 	case independent: {
 		_old = _queryResult select 9;
