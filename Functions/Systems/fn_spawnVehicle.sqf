@@ -99,7 +99,7 @@ _vehicle setVariable["dbInfo",[(_vInfo select 4),_vInfo select 7]];
 _vehicle setVariable["OColor",_vInfo select 8,true];
 //_vehicle addEventHandler["Killed","_this spawn TON_fnc_vehicleDead"]; //Obsolete function?
 [_vehicle] call life_fnc_clearVehicleAmmo;
-[_vehicle] call life_fnc_vehicleAfterSpawn
+[_vehicle] call life_fnc_vehicleAfterSpawn;
 //Sets of animations
 
 if(EQUAL(SEL(_vInfo,1),"civ") && EQUAL(SEL(_vInfo,2),"B_Heli_Light_01_F") && !(EQUAL(SEL(_vInfo,8),13))) then {
