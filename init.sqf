@@ -191,4 +191,4 @@ life_server_isReady = true;
 PVAR_ALL("life_server_isReady");
 
 /* Initialize hunting zone(s) */
-["hunting_zone",30] spawn TON_fnc_huntingZone;
+["hunting_zone",60] spawn TON_fnc_huntingZone;
