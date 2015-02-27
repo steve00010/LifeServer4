@@ -12,7 +12,7 @@ if(isNull _unit) exitWith {};
 _id = SEL(_this,1);
 _uid = SEL(_this,2);
 _name = SEL(_this,3);
-
+[_uid,0] spawn life_fnc_setOnline;
 _containers = nearestObjects[_unit,["WeaponHolderSimulated"],5];
 {deleteVehicle _x;} foreach _containers;
 deleteVehicle _unit;
