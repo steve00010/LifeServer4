@@ -44,7 +44,7 @@ compileFinal "
 	_from = _this select 1;
 	if(!([str(_val)] call TON_fnc_isnumber)) exitWith {};
 	if(_from == """") exitWith {};
-	pbh_life_atmcash = pbh_life_atmcash + _val;
+	life_atmcash = life_atmcash + _val;
 	hint format[""%1 has wire transferred $%2 to you."",_from,[_val] call life_fnc_numberText];
 	
 ";
@@ -144,6 +144,20 @@ private[""_msg"",""_to""];
 	hint format[""You have sent a message to all EMS Units."",_to,_msg];
 	ctrlShow[3022,true];
 ";
+//To ARC
+TON_fnc_cell_arcrequest = 
+compileFinal "
+private[""_msg"",""_to""];
+	ctrlShow[3023,false];
+	_msg = ctrlText 3003;
+	_to = ""ARC Units"";
+	if(_msg == """") exitWith {hint ""You must enter a Message!"";ctrlShow[3023,true];};
+		
+	[[_msg,name player,6],""TON_fnc_clientMessage"",east,false] spawn life_fnc_MP;
+	[] call life_fnc_cellphone;
+	hint format[""You have sent a message to all ARC Units."",_to,_msg];
+	ctrlShow[3023,true];
+";
 //To One Person
 TON_fnc_cell_textmsg =
 compileFinal "
@@ -224,6 +238,7 @@ publicVariable "TON_fnc_cell_textadmin";
 publicVariable "TON_fnc_cell_adminmsg";
 publicVariable "TON_fnc_cell_adminmsgall";
 publicVariable "TON_fnc_cell_emsrequest";
+publicVariable "TON_fnc_cell_arcrequest"; 
 //Client Message
 /*
 	0 = private message
@@ -303,8 +318,16 @@ compileFinal "
 			_message = format[""!!!EMS REQUEST: %1"",_msg];
 			hint parseText format [""<t color='#FFCC00'><t size='2'><t align='center'>EMS Request<br/><br/><t color='#33CC33'><t align='left'><t size='1'>To: <t color='#ffffff'>You<br/><t color='#33CC33'>From: <t color='#ffffff'>%1<br/><br/><t color='#33CC33'>Message:<br/><t color='#ffffff'>%2"",_from,_msg];
 			PlaySound ""sms"";
-			[""TextMessage"",[format[""EMS Request from %1"",_from]]] call bis_fnc_showNotification;
+			[""TextMessage"",[format[""EMS Request from %1"",_from]]] call bis_fnc_showNotification;			
 		};
+		
+		case 6: {
+			private[""_message""];
+			_message = format[""!!!ARC REQUEST: %1"",_msg];
+			hint parseText format [""<t color='#FFCC00'><t size='2'><t align='center'>ARC Request<br/><br/><t color='#33CC33'><t align='left'><t size='1'>To: <t color='#ffffff'>You<br/><t color='#33CC33'>From: <t color='#ffffff'>%1<br/><br/><t color='#33CC33'>Message:<br/><t color='#ffffff'>%2"",_from,_msg];
+			
+			[""TextMessage"",[format[""ARC Request from %1"",_from]]] call bis_fnc_showNotification;
+		};		
 	};
 ";
 publicVariable "TON_fnc_clientMessage";

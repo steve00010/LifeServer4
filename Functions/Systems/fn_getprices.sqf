@@ -49,6 +49,7 @@ case "bar" :{ _query =  "name"};
 case "organ" :{ _query =  "name"};
 case "gang" :{ _query =  "rebel"};
 case "economy" :{_query =  "economy"};
+case "crystal" :{_query = "crystal"};
 default {_query =  "Error"};
 };
 

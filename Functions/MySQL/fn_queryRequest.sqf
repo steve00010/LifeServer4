@@ -27,6 +27,7 @@ _query = switch(_side) do {
 	case west: {_returnCount = 14; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, cop_licenses, coplevel, cop_gear, blacklist, playtime, swatlevel, druglevel, drugaddiction FROM players WHERE playerid='%1'",_uid];};
 	case civilian: {_returnCount = 12; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, civ_licenses, arrested, civ_gear, playtime, druglevel, drugaddiction FROM players WHERE playerid='%1'",_uid];};
 	case independent: {_returnCount = 12; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, med_licenses, mediclevel, med_gear, playtime FROM players WHERE playerid='%1'",_uid];};
+	case east: {_returnCount = 9; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, arc_licenses, arclevel, arc_gear, playtime FROM players WHERE playerid='%1'",_uid];};	
 };
 
 waitUntil{sleep (random 0.3); !DB_Async_Active};
@@ -113,6 +114,16 @@ switch (_side) do {
 		
 		_queryResult pushBack (missionNamespace getVariable[format["gang_%1",_uid],[]]);
 		
+	};
+	case east: {
+		_old = _queryResult select 9;
+		_new = _old;
+		if(typeName _old == "STRING") then
+		{
+			_new = parseNumber _old;
+		};
+		[_uid, _new] call life_fnc_setPlayTime;
+		_queryResult set[9,_new];
 	};
 	case independent: {
 		_old = _queryResult select 9;
