@@ -154,6 +154,7 @@ class CfgFunctions
 			class CasinoRaid {};
 			class CasinoState {};
 			class goldUpdate {};
+			class whoDunnit {};
 		};
 		
 		class Housing
