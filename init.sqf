@@ -195,4 +195,3 @@ PVAR_ALL("life_server_isReady");
 
 /* Initialize hunting zone(s) */
 ["hunting_zone",60] spawn TON_fnc_huntingZone;
-[] execVM "\life_server\Functions\DynMarket\fn_config.sqf";

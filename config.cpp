@@ -149,23 +149,13 @@ class CfgFunctions
 			class setObjVar {};
 			class keyManagement {};
 			class loadEconomy {};
+			class getPrices {};
 			class vehicleSpray {};
 			class CasinoRaid {};
 			class CasinoState {};
 			class goldUpdate {};
 			class whoDunnit {};
 		};
-        
-		class DynMarket
-        {
-            file = "\life_server\Functions\DynMarket";
-            class calculatePrices {};
-            class config {};
-            class getUpdate {};
-            class HandleDB {};
-            class playerLogged {};
-            class sleeper {};
-        };		
 		
 		class Housing
 		{
