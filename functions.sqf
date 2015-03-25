@@ -333,7 +333,7 @@ compileFinal "
 publicVariable "TON_fnc_clientMessage";
 life_fnc_xpHandler =
 compileFinal "
-private ["_xp","_setup"];
+private [""_xp"",""_setup""];
 
 if((_this select 0) == 0) then {
 	life_xp = life_xp + 1;
