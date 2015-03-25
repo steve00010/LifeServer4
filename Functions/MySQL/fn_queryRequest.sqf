@@ -24,10 +24,10 @@ _ownerID = owner _ownerID;
 	The other part is well the SQL statement.
 */
 _query = switch(_side) do {
-	case west: {_returnCount = 14; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, cop_licenses, coplevel, cop_gear, blacklist, playtime, swatlevel, druglevel, drugaddiction FROM players WHERE playerid='%1'",_uid];};
-	case civilian: {_returnCount = 12; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, civ_licenses, arrested, civ_gear, playtime, druglevel, drugaddiction FROM players WHERE playerid='%1'",_uid];};
-	case independent: {_returnCount = 12; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, med_licenses, mediclevel, med_gear, playtime FROM players WHERE playerid='%1'",_uid];};
-	case east: {_returnCount = 9; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, arc_licenses, arclevel, arc_gear, playtime FROM players WHERE playerid='%1'",_uid];};	
+	case west: {_returnCount = 16; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, cop_licenses, coplevel, cop_gear, blacklist, playtime, swatlevel, druglevel, drugaddiction, XPLevel, XPAmount FROM players WHERE playerid='%1'",_uid];};
+	case civilian: {_returnCount = 14; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, civ_licenses, arrested, civ_gear, playtime, druglevel, drugaddiction, XPLevel, XPAmount FROM players WHERE playerid='%1'",_uid];};
+	case independent: {_returnCount = 14; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, med_licenses, mediclevel, med_gear, playtime, XPLevel, XPAmount FROM players WHERE playerid='%1'",_uid];};
+	case east: {_returnCount = 11; format["SELECT playerid, name, cash, bankacc, adminlevel, donatorlvl, arc_licenses, arclevel, arc_gear, playtime, XPLevel, XPAmount FROM players WHERE playerid='%1'",_uid];};	
 };
 
 waitUntil{sleep (random 0.3); !DB_Async_Active};
@@ -138,6 +138,6 @@ switch (_side) do {
 };
 
 _keyArr = missionNamespace getVariable [format["%1_KEYS_%2",_uid,_side],[]];
-_queryResult set[14,_keyArr];
+_queryResult set[16,_keyArr];
 
 [_queryResult,"SOCK_fnc_requestReceived",_ownerID,false] call life_fnc_MP;
